@@ -9,22 +9,42 @@ namespace Stage1
         {
             WriteLine("Hello, World!");
             var school = new School("Academy", 2021, SchoolTypes.kinderGarden, country: "Canadá", city: "Barranquilla");
-            // school.Name="Academy";
-            // school.Country="Colombia";
-            // school.City="Barranquilla";
             school.SchoolType = SchoolTypes.Primary;
 
-            var courseList= new List<Course>(){
-                new Course() { Name = "101" },
-                new Course() { Name = "102" },
-                new Course() { Name = "103" },
+            school.Courses= new List<Course>(){
+                new Course() { Name = "101" , Schedule=ScheduleType.AtAfternoon},
+                new Course() { Name = "102" , Schedule=ScheduleType.AtAfternoon},
+                new Course() { Name = "103" , Schedule=ScheduleType.AtAfternoon},
             };
+            school.Courses.Add(new Course(){Name="201",Schedule=ScheduleType.AtMorning});
+            school.Courses.Add(new Course(){Name="202",Schedule=ScheduleType.AtMorning});
 
-        
-            school.Courses=courseList;
+
+            var otherCollection=new List<Course>(){
+                new Course() { Name = "301" , Schedule=ScheduleType.AtAfternoon},
+                new Course() { Name = "302" , Schedule=ScheduleType.AtAfternoon},
+                new Course() { Name = "303" , Schedule=ScheduleType.AtAfternoon},
+            };
+            Course tmp=new Course() { Name = "101-Vacacional" , Schedule=ScheduleType.AtNight};
+            school.Courses.AddRange(otherCollection);
+            school.Courses.Add(tmp);
+            printSchoolsCourses(school);
+            // school.Courses.Remove(tmp);
+            // WriteLine("deleted"+ tmp.GetHashCode());
+            
+            school.Courses.RemoveAll(delegate (Course course)
+                                    {
+                                        return course.Name=="301";
+                                    });
+            school.Courses.RemoveAll((course)=> course.Name=="302");
             printSchoolsCourses(school);
 
         }
+
+        // private static bool Predicado(Course curobj)
+        // {
+        //     return curobj.Name=="301";
+        // }
 
         private static void printSchoolsCourses(School school)
         {
